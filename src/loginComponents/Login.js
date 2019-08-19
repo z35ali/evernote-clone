@@ -17,20 +17,6 @@ class Login extends React.Component {
     };
   }
 
-  loginFailed = () => {
-    toast.error('Incorrect Login', {
-      position: toast.POSITION.BOTTOM_CENTER,
-      autoClose: 1500
-    });
-  };
-
-  signUpFailed = () => {
-    toast.error('Sign Up Error', {
-      position: toast.POSITION.BOTTOM_CENTER,
-      autoClose: 1500
-    });
-  };
-
   passwordsNotMatch = () => {
     toast.error('Passwords Do Not Match', {
       position: toast.POSITION.BOTTOM_CENTER,
@@ -44,32 +30,64 @@ class Login extends React.Component {
 
   login = e => {
     e.preventDefault();
-    fire
-      .auth()
-      .signInWithEmailAndPassword(this.state.email, this.state.password)
-      .then(u => {})
-      .catch(error => {
-        console.log(error);
-        this.loginFailed();
+    if (this.state.email === '' || this.state.password === '') {
+      toast.error('One or more fields are empty.', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500
       });
-  };
-
-  signup = e => {
-    e.preventDefault();
-    if (this.state.password === this.state.password2) {
+    } else {
       fire
         .auth()
-        .createUserWithEmailAndPassword(this.state.email, this.state.password)
+        .signInWithEmailAndPassword(this.state.email, this.state.password)
         .then(u => {})
-        .then(u => {
-          console.log(u);
-        })
         .catch(error => {
-          console.log(error);
-          this.signUpFailed();
+          toast.error(error.message, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            autoClose: 1700
+          });
         });
+    }
+  };
+  validateEmail(email) {
+    const regexp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return regexp.test(email);
+  }
+  signup = e => {
+    e.preventDefault();
+    if (
+      this.state.password === '' ||
+      this.state.password2 === '' ||
+      this.state.email === ''
+    ) {
+      toast.error('One or more fields are empty.', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500
+      });
     } else {
-      this.passwordsNotMatch();
+      if (!this.validateEmail(this.state.email)) {
+        toast.error('Invalid email.', {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1500
+        });
+      }
+
+      if (this.state.password === this.state.password2) {
+        fire
+          .auth()
+          .createUserWithEmailAndPassword(this.state.email, this.state.password)
+          .then(u => {})
+          .then(u => {
+            console.log(u);
+          })
+          .catch(error => {
+            toast.error(error.message, {
+              position: toast.POSITION.BOTTOM_CENTER,
+              autoClose: 1500
+            });
+          });
+      } else {
+        this.passwordsNotMatch();
+      }
     }
   };
 
@@ -158,19 +176,21 @@ class Login extends React.Component {
               >
                 Signup
               </button>
-              <button
-                onClick={e => {
-                  e.preventDefault();
+              {!this.state.signup ? (
+                <button
+                  onClick={e => {
+                    e.preventDefault();
 
-                  this.setState({
-                    forgotPass: true
-                  });
-                }}
-                className='btn btn-danger'
-                style={{ marginLeft: '25px' }}
-              >
-                Forgot Password
-              </button>
+                    this.setState({
+                      forgotPass: true
+                    });
+                  }}
+                  className='btn btn-danger'
+                  style={{ marginLeft: '25px' }}
+                >
+                  Forgot Password
+                </button>
+              ) : null}
             </form>
           </div>
         ) : (

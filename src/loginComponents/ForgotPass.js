@@ -24,7 +24,12 @@ class ForgotPass extends React.Component {
   };
 
   forgotPassword = email => {
-    if (this.validateEmail(email)) {
+    if (email === '') {
+      toast.error('Empty Email Field.', {
+        position: toast.POSITION.BOTTOM_CENTER,
+        autoClose: 1500
+      });
+    } else {
       fire
         .auth()
         .sendPasswordResetEmail(email)
@@ -34,12 +39,12 @@ class ForgotPass extends React.Component {
             autoClose: 1500
           });
         })
-        .catch(function(e) {});
-    } else {
-      toast.error('Incorrect Email Format', {
-        position: toast.POSITION.BOTTOM_CENTER,
-        autoClose: 1500
-      });
+        .catch(function(e) {
+          toast.error(e.message, {
+            position: toast.POSITION.BOTTOM_CENTER,
+            autoClose: 1500
+          });
+        });
     }
   };
 
