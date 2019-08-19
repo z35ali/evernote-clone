@@ -140,7 +140,7 @@ class Login extends React.Component {
                 <></>
               )}
               <button
-                type='submit'
+                type={!this.state.signup ? 'submit' : 'button'}
                 onClick={e => {
                   e.preventDefault();
                   if (!this.state.signup) {
@@ -156,6 +156,7 @@ class Login extends React.Component {
                 {!this.state.signup ? 'Login' : 'Back To Login'}
               </button>
               <button
+                type={this.state.signup ? 'submit' : 'button'}
                 onClick={e => {
                   e.preventDefault();
                   if (this.state.signup) {
@@ -172,6 +173,7 @@ class Login extends React.Component {
               </button>
               {!this.state.signup ? (
                 <button
+                  type='button'
                   onClick={e => {
                     e.preventDefault();
 
