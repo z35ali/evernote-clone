@@ -3,6 +3,7 @@ import fire from '../config/Fire';
 import 'bootstrap/dist/css/bootstrap.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ForgotPass from './ForgotPass';
 class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,8 @@ class Login extends React.Component {
       email: '',
       password: '',
       password2: '',
-      signup: false
+      signup: false,
+      forgotPass: false
     };
   }
 
@@ -73,87 +75,108 @@ class Login extends React.Component {
 
   render() {
     return (
-      <div className='col-md-6'>
-        <h1>{this.state.signup ? 'Sign Up' : 'Log In'}</h1>
-        <form>
-          <div className='form-group'>
-            <label htmlFor='exampleInputEmail1'>Email address</label>
-            <input
-              value={this.state.email}
-              onChange={this.handleChange}
-              type='email'
-              name='email'
-              className='form-control'
-              id='exampleInputEmail1'
-              aria-describedby='emailHelp'
-              placeholder='Enter email'
-            />
-            <small id='emailHelp' className='form-text text-muted'>
-              We'll never share your email with anyone else.
-            </small>
+      <>
+        {!this.state.forgotPass ? (
+          <div className='col-md-6'>
+            <h1>{this.state.signup ? 'Sign Up' : 'Log In'}</h1>
+            <form>
+              <div className='form-group'>
+                <label htmlFor='exampleInputEmail1'>Email address</label>
+                <input
+                  value={this.state.email}
+                  onChange={this.handleChange}
+                  type='email'
+                  name='email'
+                  className='form-control'
+                  id='exampleInputEmail1'
+                  aria-describedby='emailHelp'
+                  placeholder='Enter email'
+                />
+                <small id='emailHelp' className='form-text text-muted'>
+                  We'll never share your email with anyone else.
+                </small>
+              </div>
+              <div className='form-group'>
+                <label htmlFor='exampleInputPassword1'>Password</label>
+                <input
+                  value={this.state.password}
+                  onChange={this.handleChange}
+                  type='password'
+                  name='password'
+                  className='form-control'
+                  id='exampleInputPassword1'
+                  placeholder='Password'
+                />
+              </div>
+              {this.state.signup ? (
+                <>
+                  <label htmlFor='exampleInputPassword2'>
+                    Confirm Password
+                  </label>
+                  <input
+                    value={this.state.password2}
+                    onChange={this.handleChange}
+                    type='password'
+                    name='password2'
+                    className='form-control'
+                    id='exampleInputPassword2'
+                    placeholder='Confirm Password'
+                  />
+                  <br />
+                </>
+              ) : (
+                <></>
+              )}
+              <button
+                type='submit'
+                onClick={e => {
+                  e.preventDefault();
+                  if (!this.state.signup) {
+                    this.login(e);
+                  }
+                  this.setState({
+                    signup: false
+                  });
+                }}
+                className='btn btn-primary'
+                style={{ backgroundColor: '#29487d', borderColor: '#29487d' }}
+              >
+                {!this.state.signup ? 'Login' : 'Back To Login'}
+              </button>
+              <button
+                onClick={e => {
+                  e.preventDefault();
+                  if (this.state.signup) {
+                    this.signup(e);
+                  }
+                  this.setState({
+                    signup: true
+                  });
+                }}
+                style={{ marginLeft: '25px' }}
+                className='btn btn-success'
+              >
+                Signup
+              </button>
+              <button
+                onClick={e => {
+                  e.preventDefault();
+
+                  this.setState({
+                    forgotPass: true
+                  });
+                }}
+                className='btn btn-danger'
+                style={{ marginLeft: '25px' }}
+              >
+                Forgot Password
+              </button>
+            </form>
           </div>
-          <div className='form-group'>
-            <label htmlFor='exampleInputPassword1'>Password</label>
-            <input
-              value={this.state.password}
-              onChange={this.handleChange}
-              type='password'
-              name='password'
-              className='form-control'
-              id='exampleInputPassword1'
-              placeholder='Password'
-            />
-          </div>
-          {this.state.signup ? (
-            <>
-              <label htmlFor='exampleInputPassword2'>Confirm Password</label>
-              <input
-                value={this.state.password2}
-                onChange={this.handleChange}
-                type='password'
-                name='password2'
-                className='form-control'
-                id='exampleInputPassword2'
-                placeholder='Confirm Password'
-              />
-              <br />
-            </>
-          ) : (
-            <></>
-          )}
-          <button
-            type='submit'
-            onClick={e => {
-              e.preventDefault();
-              if (!this.state.signup) {
-                this.login(e);
-              }
-              this.setState({
-                signup: false
-              });
-            }}
-            className='btn btn-primary'
-            style={{ backgroundColor: '#29487d', borderColor: '#29487d' }}
-          >
-            Login
-          </button>
-          <button
-            onClick={e => {
-              e.preventDefault();
-              if (this.state.signup) {
-                this.signup(e);
-              }
-              this.setState({
-                signup: true
-              });
-            }}
-            style={{ marginLeft: '25px' }}
-            className='btn btn-success'
-          >
-            Signup
-          </button>
-        </form>
-      </div>
+        ) : (
+          <ForgotPass />
+        )}
+      </>
     );
   }
 }
