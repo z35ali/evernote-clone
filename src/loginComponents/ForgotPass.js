@@ -73,7 +73,6 @@ class ForgotPass extends React.Component {
               </div>
 
               <button
-                type='submit'
                 onClick={e => {
                   e.preventDefault();
 

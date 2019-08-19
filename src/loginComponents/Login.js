@@ -17,13 +17,6 @@ class Login extends React.Component {
     };
   }
 
-  passwordsNotMatch = () => {
-    toast.error('Passwords Do Not Match', {
-      position: toast.POSITION.BOTTOM_CENTER,
-      autoClose: 1500
-    });
-  };
-
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -76,9 +69,7 @@ class Login extends React.Component {
           .auth()
           .createUserWithEmailAndPassword(this.state.email, this.state.password)
           .then(u => {})
-          .then(u => {
-            console.log(u);
-          })
+          .then(u => {})
           .catch(error => {
             toast.error(error.message, {
               position: toast.POSITION.BOTTOM_CENTER,
@@ -86,7 +77,10 @@ class Login extends React.Component {
             });
           });
       } else {
-        this.passwordsNotMatch();
+        toast.error('Passwords do not match.', {
+          position: toast.POSITION.BOTTOM_CENTER,
+          autoClose: 1500
+        });
       }
     }
   };
