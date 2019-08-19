@@ -73,6 +73,7 @@ class ForgotPass extends React.Component {
               </div>
 
               <button
+                type='button'
                 onClick={e => {
                   e.preventDefault();
 
@@ -86,6 +87,7 @@ class ForgotPass extends React.Component {
                 Back To Login
               </button>
               <button
+                type='submit'
                 onClick={e => {
                   e.preventDefault();
                   this.forgotPassword(this.state.email);
