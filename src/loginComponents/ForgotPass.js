@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Login from './Login';
+
 class ForgotPass extends React.Component {
   constructor(props) {
     super(props);
@@ -52,7 +53,7 @@ class ForgotPass extends React.Component {
     return (
       <>
         {!this.state.login ? (
-          <div className='col-md-6'>
+          <div className='col-md-6 auth'>
             <h1>Forgot Password</h1>
             <form>
               <div className='form-group'>

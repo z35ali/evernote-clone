@@ -89,7 +89,7 @@ class Login extends React.Component {
     return (
       <>
         {!this.state.forgotPass ? (
-          <div className='col-md-6'>
+          <div className='col-md-6 auth'>
             <h1>{this.state.signup ? 'Sign Up' : 'Log In'}</h1>
             <form>
               <div className='form-group'>
