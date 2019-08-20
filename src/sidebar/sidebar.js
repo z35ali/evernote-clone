@@ -65,7 +65,8 @@ class SidebarComponent extends React.Component {
             style={{
               position: 'absolute',
               bottom: 5,
-              left: 100
+              left: 100,
+              zIndex: '2'
             }}
           >
             {user}

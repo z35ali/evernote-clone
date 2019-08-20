@@ -4,6 +4,7 @@ import Evernote from './Evernote';
 import Login from './loginComponents/Login';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './App.css';
 class App extends Component {
   constructor() {
     super();
